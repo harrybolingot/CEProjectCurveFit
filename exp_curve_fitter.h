@@ -5,8 +5,6 @@
 #include <vector>
 #include "exp_curve_fitter.h"
 
-
-
 using namespace std;
 
 class expCurveFitter  // fits data to A + B exp ( C x)
@@ -23,15 +21,9 @@ class expCurveFitter  // fits data to A + B exp ( C x)
     double getX(int index);
     double getY(int index);
 
-    // Testing for printing the vector data correctly
-    // To be removed
-    void Print(vector<double> s);
+  private:
     vector<double> x_data;
     vector<double> y_data;
-
-  private:
-    //vector<double> x_data;
-    //vector<double> y_data;
     double paramA;
     double paramB;
     double paramC;
