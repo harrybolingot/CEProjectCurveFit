@@ -39,40 +39,40 @@ void expCurveFitter::Print(vector<double> s){
 void expCurveFitter::fit()
 {
     int i, number;
-    //  vector<double> x_data;
-    //  vector<double> y_data;
+    // Make copies of each vector data
+    // To-do: Consider if we only need to make a copy of y-data for arbitrary A.
+    vector<double> new_x_data(x_data);
+    vector<double> new_y_data(y_data);
     float sumx=0,sumlogy=0;
-    number = x_data.size(); //assigns x-vector size to an int. this breaks if data is invalid. :/
+    number = new_x_data.size(); //assigns x-vector size to an int. this breaks if data is invalid. :/
 
     // this should provide a better chance at not blowing all over, i think.
     float productxlogy[number],sumxlogy=0,square[number],sumx2=0;
     //float productxlogy[MAX],sumxlogy=0,square[MAX],sumx2=0;
     float denominator,a,b,c;
 
-
-
     for(i=0;i<number;i++)
     {
-        sumx=sumx+x_data[i];
+        sumx=sumx+new_x_data[i];
     }
 
     for(i=0;i<number;i++)
     {
-        sumlogy=sumlogy+log(y_data[i]);
+        sumlogy=sumlogy+log(new_y_data[i]);
     }
 
     cout << "\nsumlogy = " << sumlogy;
 
     for(i=0;i<number;i++)
     {
-        productxlogy[i]=x_data[i]*log(y_data[i]);
+        productxlogy[i]=new_x_data[i]*log(new_y_data[i]);
         sumxlogy=sumxlogy+productxlogy[i];
     }
     cout << "\n " << sumxlogy;
 
     for(i=0;i<number;i++)
     {
-        square[i]=x_data[i]*x_data[i];
+        square[i]=new_x_data[i]*new_x_data[i];
         sumx2=sumx2+square[i];
     }
 
@@ -84,7 +84,7 @@ void expCurveFitter::fit()
     {
         // Find a way to standardize output(?)
         // This seems more convenient.
-        printf( "%0.2f     %0.2f        %.2f         %.2f  ",x_data[i],y_data[i],square[i],productxlogy[i]);
+        printf( "%0.2f     %0.2f        %.2f         %.2f  ",new_x_data[i],new_y_data[i],square[i],productxlogy[i]);
         printf("\n");
     }
 
