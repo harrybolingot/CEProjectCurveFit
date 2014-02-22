@@ -11,31 +11,26 @@ using namespace std;
 
 class expCurveFitter  // fits data to A + B exp ( C x)
 {
-  public:
-    void importData(string filename);
-    void fit();
+  public: 
+    void importData(string filename );
+    void fit();    
     double squareDiff();
     double getA();
     double getB();
     double getC();
-
-    double numPoints();
-    double getX(int index);
+    void showData();
+    int numPoints();
+    
+    double getX(int index);  
     double getY(int index);
 
-    // Testing for printing the vector data correctly
-    // To be removed
-    void Print(vector<double> s);
-    vector<double> x_data;
-    vector<double> y_data;
-
   private:
-    //vector<double> x_data;
-    //vector<double> y_data;
+    vector<double> x_data;         
+    vector<double> y_data;         
     double paramA;
     double paramB;
-    double paramC;
-
+    double paramC;        
+    
 };
 
 #endif
