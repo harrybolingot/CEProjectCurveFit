@@ -67,9 +67,10 @@ void expCurveFitter::fit()
     c=((sumlny*sumx2)-(sumx*sumxlny))/denominator;
     b=((number*sumxlny)-(sumx*sumlny))/denominator;
     a=exp(c);
-    cout << "\n\n" << "The equation is : ";
+    cout << "\n\n" << "The equation is: ";
     // Find a way to standardize output(?)
     // This seems more convenient.
+//    cout << "y = " << a << "e^" << b << "x" << endl;
     printf("    y = %.4fe^%.4fx    ",a,b);
     cout << endl;
 }
