@@ -5,6 +5,8 @@
 #include <vector>
 #include "exp_curve_fitter.h"
 
+
+
 using namespace std;
 
 class expCurveFitter  // fits data to A + B exp ( C x)

@@ -5,8 +5,9 @@
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
+#include <iomanip>
 #include "exp_curve_fitter.h"
-#define MAX 10 //to remove if not needed
+// #define MAX 10 //to remove if not needed
 
 using namespace std;
 
@@ -15,8 +16,6 @@ void expCurveFitter::importData(string filename)
   fstream f;
   double value;
   f.open( filename.c_str() );
-  //  vector<double> x_data;
-  //  vector<double> y_data;
 
   while (! f.eof() )
   {
@@ -25,72 +24,48 @@ void expCurveFitter::importData(string filename)
     f >> value;
     y_data.push_back(value);
   }
-
-}
-
-// Testing for printing the vector data correctly
-// To be removed
-void expCurveFitter::Print(vector<double> s){
-    for (int i =0; i < s.size(); i++){
-        cout << s[i] << endl;
-    }
 }
 
 void expCurveFitter::fit()
 {
+    // Uses the Least Squares Method
+    // Prioritizes over small y values
     int i, number;
-    // Make copies of each vector data
-    // To-do: Consider if we only need to make a copy of y-data for arbitrary A.
+    int iter_check;
     vector<double> new_x_data(x_data);
     vector<double> new_y_data(y_data);
-    float sumx=0,sumlogy=0;
+    vector<double> result; // Results of each reiteration are put in here
+    float sumx=0,sumlny=0;
     number = new_x_data.size(); //assigns x-vector size to an int. this breaks if data is invalid. :/
-
-    // this should provide a better chance at not blowing all over, i think.
-    float productxlogy[number],sumxlogy=0,square[number],sumx2=0;
-    //float productxlogy[MAX],sumxlogy=0,square[MAX],sumx2=0;
+    float productxlny[number],sumxlny=0,square[number],sumx2=0; // instead of MAX = 10, I set it to number.
+                                                                // not sure if it has any big implications.
     float denominator,a,b,c;
-
     for(i=0;i<number;i++)
     {
-        sumx=sumx+new_x_data[i];
+        sumx += new_x_data[i]; // a += b is the same as a = a + b
+        sumlny += log(new_y_data[i]);
     }
-
     for(i=0;i<number;i++)
-    {
-        sumlogy=sumlogy+log(new_y_data[i]);
+    {   productxlny[i]=new_x_data[i]*log(new_y_data[i]);
+        sumxlny += productxlny[i];
     }
-
-    cout << "\nsumlogy = " << sumlogy;
-
-    for(i=0;i<number;i++)
-    {
-        productxlogy[i]=new_x_data[i]*log(new_y_data[i]);
-        sumxlogy=sumxlogy+productxlogy[i];
-    }
-    cout << "\n " << sumxlogy;
-
     for(i=0;i<number;i++)
     {
         square[i]=new_x_data[i]*new_x_data[i];
-        sumx2=sumx2+square[i];
+        sumx2 += square[i];
     }
-
     system("cls");
-
     cout << "\n\n" << "Exponential Curve Method" << "\n\n";
-    cout << "  x        y              Ex2             Exlogy  " << "\n\n";
+    // setw is much more convenient to use!
+    // http://www.cplusplus.com/reference/iomanip/setw/
+    cout << setw(10) << "x" << setw(10) << "y"  << setw(10) << "Ex2" << setw(15) << "Exlogy" << endl << endl;
     for(i=0;i<number;i++)
     {
-        // Find a way to standardize output(?)
-        // This seems more convenient.
-        printf( "%0.2f     %0.2f        %.2f         %.2f  ",new_x_data[i],new_y_data[i],square[i],productxlogy[i]);
-        printf("\n");
+        cout << setw(10) << new_x_data[i] << setw(10) << new_y_data[i] << setw(10) << square[i] << setw(15) << productxlny[i] << endl;
     }
-
     denominator=(number*sumx2)-(sumx*sumx);
-    c=((sumlogy*sumx2)-(sumx*sumxlogy))/denominator;
-    b=((number*sumxlogy)-(sumx*sumlogy))/denominator;
+    c=((sumlny*sumx2)-(sumx*sumxlny))/denominator;
+    b=((number*sumxlny)-(sumx*sumlny))/denominator;
     a=exp(c);
     cout << "\n\n" << "The equation is : ";
     // Find a way to standardize output(?)
