@@ -1,0 +1,11 @@
+void expCurveFitter::dummify(){
+    //dummyFactor = yData.at(yData.size()-1)/(double)(rand());
+    double randomNumber = rand()%100;
+    dummyFactor = (*min_element(yData.begin(), yData.end()))/randomNumber;
+    cout << "Random Number: " << randomNumber << endl << "Dummy Factor: " << dummyFactor << endl << endl;
+
+    for(int i = 0; i < yData.size(); i++){
+        yData.at(i) = yData.at(i) - dummyFactor;
+        cout << xData.at(i)  << "\t\t" << yData.at(i)  << endl;
+    }
+}
