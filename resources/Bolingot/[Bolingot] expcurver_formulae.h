@@ -20,6 +20,7 @@ class expCurveFitter  // fits data to A + B exp ( C x)
     void displayEquation();
     void leastSqDiff();
     void regressify();
+    void verify();
 
     double getX(int index);
     double getY(int index);
@@ -34,6 +35,9 @@ class expCurveFitter  // fits data to A + B exp ( C x)
     double denominator, B, C;
     double A;
     double totalYregressified, meanYregressified;
+    double St, Sr;
+    double diff;
+    double Rsq;
 };
 
 #endif

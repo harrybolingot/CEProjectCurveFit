@@ -1,0 +1,26 @@
+# depslib dependency file v1.0
+1393227275 source:c:\110548\[02-23-2014] exponential curving\expcurver\expcurver_functions.cpp
+	<fstream>
+	<iostream>
+	<string>
+	<cmath>
+	"expcurver_formulae.h"
+	<vector>
+	<stdlib.h>
+	<algorithm>
+	<ctime>
+	<iomanip>
+
+1393226902 c:\110548\[02-23-2014] exponential curving\expcurver\expcurver_formulae.h
+	<fstream>
+	<string>
+	<vector>
+
+1393226964 source:c:\110548\[02-23-2014] exponential curving\expcurver\main.cpp
+	<fstream>
+	<cstdlib>
+	<iostream>
+	<string>
+	<vector>
+	"expcurver_formulae.h"
+

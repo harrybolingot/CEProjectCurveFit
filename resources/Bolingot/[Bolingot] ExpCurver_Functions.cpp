@@ -106,7 +106,7 @@ void expCurveFitter::regressify(){
 
 void expCurveFitter::leastSqDiff(){
     double meanSquareDiff = 0;
-    double diff;
+    diff = 0;
     meanYregressified = 0;
 
   for (int i=0; i < yData.size(); i++ )
@@ -114,10 +114,26 @@ void expCurveFitter::leastSqDiff(){
     diff =  yDataRegressified[i] - yData[i];
     meanSquareDiff += diff*diff;
 
-    Yregressified += yDataRegressified[i];
+    meanYregressified += yDataRegressified[i];
   }
     meanSquareDiff /= xData.size();
+    meanYregressified /= yDataRegressified.size();
     cout << "Mean-square Difference: " << meanSquareDiff << endl;
+    cout << "Mean value of Regressified Y-Values: " << meanYregressified << endl;
+}
 
+void expCurveFitter::verify(){
+    St = 0;
+    Sr = 0;
 
+    for(int i = 0; i < yData.size(); i++){
+        Sr += pow((yData[i]-yDataRegressified[i]), 2);
+        St += pow((yData[i] - meanYregressified), 2);
+    }
+
+    Rsq = (St - Sr)/St;
+
+    cout << "St: " << St << endl;
+    cout << "Sr: " << Sr << endl;
+    cout << "R-squared: " << Rsq*100 << "%" << endl;
 }
